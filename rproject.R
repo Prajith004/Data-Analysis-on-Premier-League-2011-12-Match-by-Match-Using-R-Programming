@@ -15,16 +15,24 @@ print("Teams And Their Total Scores ")
 result <- aggregate(Goals ~ Team, Data, sum)
 print(result)
 print("Teams and their scores on average per match")
-j=1
-for(i in unique_values ){
-  team_to_calculate <- i
-  team_data <- df[Data$Team == team_to_calculate, ]
-  mean_score <- mean(team_data$Goals)
-  cat(j,i,mean_score)
-  j=j+1
-}
-result <- aggregate(Goals ~ Team, Data, mean)
-print(result)
 
-final_match=max(Data$Date)
-final_match
+result2 <- aggregate(Goals ~ Team, Data, mean)
+print(result2)
+
+#final_match=max(Data$Date)
+#final_match
+library(plotrix)
+x=result$Goals
+lbl=result$Team
+png(file="football.png")
+pie3D(x,labels=lbl,explode=0.1,main="Pie chart of football teams and their total score",col=rainbow(length(x)))
+
+
+dev.off()
+
+
+
+
+png(file="barfootball.png")
+barplot(x,names.arg = lbl,xlab = "Teams",ylab = "Goals",col = "blue",border = "red",main ="Bar plot of football teams and their total score")
+dev.off()
